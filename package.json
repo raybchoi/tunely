@@ -1,0 +1,27 @@
+{
+  "name": "lab_tunely",
+  "version": "0.0.1",
+  "description": "lab_work_for_week_3",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raybchoi/tunely.git"
+  },
+  "author": "Ray & Jonathan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raybchoi/tunely/issues"
+  },
+  "homepage": "https://github.com/raybchoi/tunely#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.9"
+  }
+}
