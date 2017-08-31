@@ -36,7 +36,8 @@ albums.push({
 
 // GET /api/albums
 function index(req, res) {
-  // send back all albums as JSON
+  // send back all albums as JSON to the to the app.js file to render in the html file
+  res.json(albums)
 }
 
 // POST /api/albums
