@@ -15,3 +15,6 @@ function index(req, res) {
 // this is a route for the api to respond with a JSON object that contains the information above if you went to localhost:3000/api
 // self-documenting endpoints
 // - if you get to the API endpoint tells you about the api
+module.exports = {
+  index: index
+}
