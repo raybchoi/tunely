@@ -10,6 +10,9 @@ app.use(express.static(__dirname + '/public'));
 
 var controllers = require('./controllers');
 
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 /**********
  * ROUTES *
@@ -31,6 +34,9 @@ app.get('/', function homepage (req, res) {
 app.get('/api', controllers.api.index);
 
 app.get('/api/albums', controllers.albums.index);
+
+// this route should take the inputted values from the form and post it as a new div with all the album info
+app.post('/api/albums', controllers.albums.create);
 
 /**********
  * SERVER *

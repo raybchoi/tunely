@@ -46,6 +46,30 @@ $(document).ready(function() {
     success: handleSuccess,
     error: handleError,
   });
+
+  $('#actual-form').submit( function(event) {
+    // debugger;
+    event.preventDefault();
+
+    let newData = $(this).serialize();
+    console.log(newData);
+    this.reset();
+    $.ajax({
+      type: 'POST',
+      url: 'api/albums',
+      data: newData,
+    })
+    .then(function(albumData) {
+      console.log('AJAX worked: ', albumData);
+      renderAlbum(albumData);
+    })
+    .catch(function (err){
+      console.log('AJAX FAILED: ', err)
+    });
+  });
+
+
+  // end of document ready
 });
 
 function handleSuccess (albums) {
