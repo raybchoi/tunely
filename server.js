@@ -2,7 +2,8 @@
 // require apps / thirdparty
 const express = require('express');
 const bodyParser = require('body-parser');
-
+// allows to the db in the models folder
+const db = require('./models')
 
 // generate a new express app and call it 'app'
 const app = express();
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
   res.sendFile('views/index.html', { root: __dirname});
   // __direname => /Users/raychoi/WDI/03_week3/03_03_lab_tunely
 });
+
 
 
 app.listen(3000, function() {
