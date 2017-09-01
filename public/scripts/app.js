@@ -34,6 +34,10 @@ $(document).ready(function() {
 
   // delete button parent / child asspoications
   $('#albums').on('click', '.delete-album', handleDeleteAlbum);
+  //edit button parent/child asspoications
+  $('#albums').on('click', '.edit-album', handleEditAlbum);
+  //edit button parent/child asspoications
+  $('#albums').on('click', '.save-album', handleSaveAlbum);
 
 
 });
@@ -99,6 +103,8 @@ function renderAlbum(album) {
               <div class='panel-footer'>
                 <button class='btn btn-primary add-song'>Add Song</button>
                   <button class='btn btn-primary delete-album'>Delete Album</button>
+                  <button class='btn btn-info edit-album'>Edit Album</button>
+                  <button class='btn btn-info save-album'>Save Changes</button>
               </div>
 
             </div>
@@ -107,6 +113,35 @@ function renderAlbum(album) {
   $('#albums').prepend(albumHtml);
 }
 
+// when edit album is clicked give ID
+function handleEditAlbum(e) {
+  console.log('edit-album clicked!');
+  var currentAlbumId = $(this).closest('.album').data('album-id');
+  console.log('id',currentAlbumId);
+  $(".save-album").toggle();
+  $(".edit-album").toggle();
+
+
+}
+function handleSaveAlbum(e) {
+  console.log('save-album clicked!');
+  var currentAlbumId = $(this).closest('.album').data('album-id');
+  console.log('id',currentAlbumId);
+  $.ajax({
+    method:"PUT",
+    url:"api/albums/" + currentAlbumId,
+  })
+  .then(function(data){
+    console.log("Save is working", data);
+
+    //$(".album[data-album-id=" + data._id +"]").remove();
+  })
+  .catch(function(err){
+    console.log("Delete is not working");
+  })
+  $(".save-album").toggle();
+  $(".edit-album").toggle();
+}
 // when delete album is clicked give ID
 function handleDeleteAlbum(e) {
   console.log('del-album clicked!');
