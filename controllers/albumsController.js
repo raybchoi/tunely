@@ -50,7 +50,16 @@ function destroy(req, res) {
 // PUT or PATCH /api/albums/:albumId
 function update(req, res) {
   // find one album by id, update it based on request body,
+  db.Album.findByIdAndUpdate(req.params.albumId, {new: true}, (err, album) => {
+    console.log(req.body);
+    console.log(req.body.artistName);
+    console.log(req.body.releaseDate)
+    album.name = req.body.name;
+    album.artistName= req.body.artistName;
+    album.releaseDate= req.body.releaseDate;
+  })
   // and send it back as JSON
+  console.log("it did that thing we wanted")
 }
 
 

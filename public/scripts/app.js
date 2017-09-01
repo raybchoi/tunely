@@ -38,6 +38,21 @@ $(document).ready(function() {
   //edit album when its edit button is clicked
   $('#albums').on('click', '.edit-save', handleEditAlbumClick);
 
+  $('#albums').on('click', '.save-changes', function(){
+    let album = $(this).closest('.album');
+    var currentAlbumId = $(this).closest('.album').data('album-id');
+  $.ajax({
+    method: "PUT",
+    url: "/api/albums/" + currentAlbumId,
+    data: {
+      name: album.find('.album-name').val(),
+      artistName: album.find('.artist-name').val(),
+      releaseDate: album.find('.release-date').val(),
+    }
+  })
+  console.log('after ajax')})
+
+
 });
 
 function handleEditAlbumClick(e){
@@ -127,29 +142,31 @@ function renderAlbum(album) {
                   </li>
 
                 </ul>
+                <form>
                 <ul class="list-group list-edit">
-                  <li class="list-group-item">
-                    <h4 class='inline-header'>Album Name:</h4>
-                    <input type='text' value='${album.name}'
+                <li class="list-group-item">
+                <h4 class='inline-header'>Album Name:</h4>
+                <input type='text' class="album-name" value='${album.name}'>
 
-                  </li>
+                </li>
 
-                  <li class="list-group-item">
-                    <h4 class='inline-header'>Artist Name:</h4>
-                    <input type='text' value='${album.artistName}'>
-                  </li>
+                <li class="list-group-item">
+                <h4 class='inline-header'>Artist Name:</h4>
+                <input type='text' class="artist-name" value='${album.artistName}'>
+                </li>
 
-                  <li class="list-group-item">
-                    <h4 class='inline-header'>Released date:</h4>
-                    <input type='text' value='${album.releaseDate}'>
-                  </li>
+                <li class="list-group-item">
+                <h4 class='inline-header'>Released date:</h4>
+                <input type='text' class="release-date" value='${album.releaseDate}'>
+                </li>
 
-                  <li class="list-group-item">
-                    <h4 class="inline-header">Songs:</h4>
-                    ${album.songsHtml}
-                  </li>
+                <li class="list-group-item">
+                <h4 class="inline-header">Songs:</h4>
+                ${album.songsHtml}
+                </li>
 
                 </ul>
+
               </div>
 
             </div>
@@ -159,7 +176,8 @@ function renderAlbum(album) {
               <div class='panel-footer'>
                 <button class='btn btn-primary add-song'>Add Song</button>
                 <button class='btn btn-success edit-album edit-save'>Edit Album</button>
-                <button class='btn btn-success save-changes edit-save'>Save Changes</button>
+                <button type='submit' class='btn btn-success save-changes edit-save'>Save Changes</button>
+                </form>
                 <button class='btn btn-danger delete-album'>Delete Album</button>
               </div>
             </div>
