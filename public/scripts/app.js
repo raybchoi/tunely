@@ -112,6 +112,18 @@ function handleDeleteAlbum(e) {
   console.log('del-album clicked!');
   var currentAlbumId = $(this).closest('.album').data('album-id');
   console.log('id',currentAlbumId);
+  $.ajax({
+    method:"delete",
+    url:"api/albums/" + currentAlbumId,
+  })
+  .then(function(data){
+    console.log("delete is working", data);
+
+    $(".album[data-album-id=" + data._id +"]").remove();
+  })
+  .catch(function(err){
+    console.log("Delete is not working");
+  })
 }
 
 

@@ -40,13 +40,14 @@ function show(req, res) {
 
 // DELETE /api/albums/:albumId
 function destroy(req, res) {
-  db.Album.findOneAndRemove({_id: req.params.albumId}, function(err, deleteAlbum) {
+  console.log(req.params.id);
+  db.Album.findByIdAndRemove(req.params.id, function(err, deleteAlbum) {
     if(err) {
       console.log('albumsController.delete error', err);
     }
     console.log('albumsController.delete how responding with', deleteAlbum);
     // deleteAlbum.remove();
-    // res.status(200)
+    res.json(deleteAlbum);
   });
 }
 
