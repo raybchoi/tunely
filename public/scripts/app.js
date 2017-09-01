@@ -31,6 +31,11 @@ $(document).ready(function() {
 
   // save song modal save button
   $('#saveSong').on('click', handleNewSongSubmit);
+
+  // delete button parent / child asspoications
+  $('#albums').on('click', '.delete-album', handleDeleteAlbum);
+
+
 });
 
 function renderMultipleAlbums(albums) {
@@ -93,6 +98,7 @@ function renderAlbum(album) {
             <div class='panel-footer'>
               <div class='panel-footer'>
                 <button class='btn btn-primary add-song'>Add Song</button>
+                  <button class='btn btn-primary delete-album'>Delete Album</button>
               </div>
 
             </div>
@@ -100,6 +106,14 @@ function renderAlbum(album) {
   `);
   $('#albums').prepend(albumHtml);
 }
+
+// when delete album is clicked give ID
+function handleDeleteAlbum(e) {
+  console.log('del-album clicked!');
+  var currentAlbumId = $(this).closest('.album').data('album-id');
+  console.log('id',currentAlbumId);
+}
+
 
 // when the add song button is clicked, display the modal
 function handleAddSongClick(e) {
