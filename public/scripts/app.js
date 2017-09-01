@@ -51,13 +51,14 @@ function renderMultipleAlbums(albums) {
 function renderSong(song){
   return `<span>&ndash; (${song.trackNumber}) ${song.name} &ndash;</span>`
 }
-
+let counter = 0
 function renderAlbum(album) {
   console.log('rendering album', album);
 
   album.songsHtml = album.songs.map(renderSong).join("");
 
   var albumHtml = (`
+    <form class='album-form'>
     <div class="row album" data-album-id="${album._id}">
 
       <div class="col-md-10 col-md-offset-1">
@@ -75,17 +76,20 @@ function renderAlbum(album) {
                 <ul class="list-group">
                   <li class="list-group-item">
                     <h4 class='inline-header'>Album Name:</h4>
-                    <span class='album-name'>${album.name}</span>
+                    <span class='album-name span-for-album'>${album.name}</span>
+                    <input class='album-name-input input-for-album input-for-album-name' value='${album.name}'></input>
                   </li>
 
                   <li class="list-group-item">
                     <h4 class='inline-header'>Artist Name:</h4>
-                    <span class='artist-name'>${album.artistName}</span>
+                    <span class='artist-name span-for-album'>${album.artistName}</span>
+                    <input class='artist-name-input input-for-album input-for-artist-name' value='${album.artistName}'></input>
                   </li>
 
                   <li class="list-group-item">
                     <h4 class='inline-header'>Released date:</h4>
-                    <span class='album-releaseDate'>${album.releaseDate}</span>
+                    <span class='album-releaseDate span-for-album'>${album.releaseDate}</span>
+                    <input class='album-releaseDate-input input-for-album input-for-release-date' value='${album.releaseDate}'></input>
                   </li>
 
                   <li class="list-group-item">
@@ -104,43 +108,72 @@ function renderAlbum(album) {
                 <button class='btn btn-primary add-song'>Add Song</button>
                   <button class='btn btn-primary delete-album'>Delete Album</button>
                   <button class='btn btn-info edit-album'>Edit Album</button>
-                  <button class='btn btn-info save-album'>Save Changes</button>
+                  <button type='submit' class='btn btn-info save-album'>Save Changes</button>
               </div>
 
             </div>
+            </form>
     <!-- end one album -->
   `);
   $('#albums').prepend(albumHtml);
 }
 
+
 // when edit album is clicked give ID
 function handleEditAlbum(e) {
+  e.preventDefault();
   console.log('edit-album clicked!');
+  // closest looks at parents until it finds a parent with given paramater (.album in this case)
+  let album = $(this).closest('.album');
+  // finding the ID
   var currentAlbumId = $(this).closest('.album').data('album-id');
-  console.log('id',currentAlbumId);
-  $(".save-album").toggle();
-  $(".edit-album").toggle();
 
+  // find looks at a parents childern and grandchildern till it finds one with the give paramater (.edit-save in this case)
+  // album.find('.edit-save').data('album-id', currentAlbumId)
+  console.log('id',currentAlbumId);
+  album.find(".save-album").toggle();
+  album.find(".input-for-album").toggle();
+  album.find(".edit-album").toggle();
+  album.find(".span-for-album").toggle();
 
 }
 function handleSaveAlbum(e) {
+  e.preventDefault();
   console.log('save-album clicked!');
+  let album = $(this).closest('.album');
   var currentAlbumId = $(this).closest('.album').data('album-id');
   console.log('id',currentAlbumId);
+
+  let albumnNameUpdate = album.find('.input-for-album-name').val();
+  let artistNameUpdate = album.find('.input-for-artist-name').val();
+  let resleaseDateUpdate = album.find('.input-for-release-date').val();
+  console.log('THIS IS THE ANAME', albumnNameUpdate);
+  console.log('THIS IS THE ARTNAME', artistNameUpdate);
+  console.log('THIS IS THE RELEASEDATE', resleaseDateUpdate);
+
+  let editAlbumData = {
+    artistName: artistNameUpdate,
+    name: albumnNameUpdate,
+    releaseDate: resleaseDateUpdate,
+  }
   $.ajax({
     method:"PUT",
     url:"api/albums/" + currentAlbumId,
+    data: editAlbumData,
   })
   .then(function(data){
     console.log("Save is working", data);
-
+    renderAlbum(data);
     //$(".album[data-album-id=" + data._id +"]").remove();
   })
   .catch(function(err){
     console.log("Delete is not working");
   })
-  $(".save-album").toggle();
-  $(".edit-album").toggle();
+  album.find(".save-album").toggle();
+  album.find(".input-for-album").toggle();
+  album.find(".edit-album").toggle();
+  album.find(".span-for-album").toggle();
+
 }
 // when delete album is clicked give ID
 function handleDeleteAlbum(e) {

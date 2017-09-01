@@ -55,16 +55,24 @@ function destroy(req, res) {
 function update(req, res) {
   // find one album by id, update it based on request body,
   // and send it back as JSON
-  console.log("update is working", req.params.id);
-  db.Album.findByIdAndUpdate(req.params.id, function(err, saveAlbum) {
+  console.log("UPDATE AJAX RECEIVING FILE", req.body);
+  db.Album.findByIdAndUpdate(req.params.id, {$set: { artistName: req.body.artistName, name: req.body.name, releaseDate: req.body.releaseDate}} , {new: true}, function(err, saveAlbum) {
     if(err) {
       console.log('albumsController.update error', err);
     }
-    console.log('albumsController.update how responding with', saveAlbum);
-    // deleteAlbum.remove();
+    console.log('albumsController.update RESPONDS WITH', saveAlbum);
     res.json(saveAlbum);
   });
 }
+
+// exports.editPost = function (req, res) {
+//   //console.log("edit post: " + req.body.title);
+//       Track.findByIdAndUpdate(req.params.id, {
+//         $set: { text: req.body.text, title: req.body.title }}, {upsert:true}, function (err, user) {
+//           return res.json(true);
+//         }
+//       );
+//     };
 
 
 // export public methods here
