@@ -13,3 +13,15 @@
   vertical-align: baseline;
   margin-right: 12px;
 }
+.edit-album{
+  display: inline;
+}
+.save-changes{
+  display: none;
+}
+.list-display{
+  display: inline;
+}
+.list-edit{
+  display: none;
+}
