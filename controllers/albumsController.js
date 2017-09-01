@@ -40,12 +40,24 @@ function create(req, res) {
     res.json(newAlbum);
   });
 
+
 }
 
-// GET /api/albums/:albumId
+// GET /api/albums/:album_id/
 function show(req, res) {
-  // find one album by id and send it back as JSON
-}
+  console.log('THIS IS THE GET /api/albums/:album_id', req.params.album_id);
+  let songID = req.params.album_id;
+  // db.Song.findOne({ _id : req.params.album_id}, function(err, al) {
+  //   console.log('GREAT');
+  // });
+//   db.Album.findOne({ songs : { _id : req.params.album_id }}, function(err, alumnInfo) {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log('THIS IS THE GET /api/albums/:album_id DBALBUM', alumnInfo)
+//   }
+// );
+};
 
 // DELETE /api/albums/:albumId
 function destroy(req, res) {
